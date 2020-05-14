@@ -1,0 +1,71 @@
+
+<div class="container">
+  <div class="row">
+    <div class="col-1">
+      <div class="form-group mt-3">
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseTask" aria-expanded="false" aria-controls="collapseTask" >Nueva</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="collapseTask" class="row collapse" [ngbCollapse]="isCollapsed">
+    <div class="col-12">
+      <div class="card shadow-sm mb-5 bg-white rounded">
+        <div class="card-header text-center">
+          Nueva tarea
+        </div>
+        <div class="card-body">
+
+          <form #taskForm="ngForm" (ngSubmit)="addTask(taskForm)">
+
+            <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="taskService.selectedTask._id">
+
+            <div class="row">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label for="inp_name">Nombre:</label>
+                  <input class="form-control" id="inp_name" name="title" type="text" placeholder="Nombre" #title="ngModel" [(ngModel)]="taskService.selectedTask.title">
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label for="inp_description">Descripción:</label>
+                  <input class="form-control" id="inp_description" name="description" type="text" placeholder="Descripción" #description="ngModel" [(ngModel)]="taskService.selectedTask.description">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12 text-center">
+                <button type="submit" id="btnSave" class="btn btn-success">Guardar</button>
+              </div>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <table id="table_listado_unidades" class="table table-hover shadow-sm">
+    <thead class="thead-light">
+      <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let taskk of taskService.task">
+        <td>{{ taskk.title }}</td>
+        <td>{{ taskk.description }}</td>
+        <td>
+          <button (click)="editStatus(taskk._id)" class="btn btn-info">Echo</button>
+          <button (click)="edit(taskk)" class="btn btn-info">Editar</button>
+          <button (click)="delete(taskk._id)" class="btn btn-info">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
